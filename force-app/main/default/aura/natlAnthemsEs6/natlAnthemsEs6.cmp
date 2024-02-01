@@ -1,0 +1,94 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+  <ltng:require
+    scripts="{!$Resource.myES6js}"
+    afterScriptsLoaded="{! c.afterScriptLoad }"
+  />
+  <aura:attribute name="randomCountry" type="string" />
+  <aura:attribute name="titles" type="string[]" />
+  <aura:attribute name="countries" type="string[]" />
+  <aura:attribute name="anthem" type="string" />
+  <aura:attribute name="loading" type="boolean" />
+
+  <div class="slds-p-horizontal_small">
+    <div class="slds-theme_shade slds-grid slds-gutters slds-wrap slds-p-vertical_small">
+      <div class="slds-col slds-size_1-of-1 slds-p-horizontal_x-small slds-p-bottom_medium">
+        <div class="slds-box slds-theme_default">
+          <div class="slds-text-heading_large">ES6 Static Resource</div>
+          <p style="max-width: 600px">This component leverages the myES6js.js static resource to retrieve country and national anthem information. In particular, two ES6 features are used below; Object.entries() and async/await.</p>
+          <p style="max-width: 600px" class="slds-p-top_small">This component <lightning:badge label="should not" class="slds-theme_error"></lightning:badge>
+            work when LWS is enabled</p>
+        </div>
+      </div>
+      <div
+        class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-p-horizontal_x-small"
+      >
+        <div class="slds-theme_default slds-box">
+          <div class="slds-text-title_caps slds-p-bottom_medium">Valid ES5</div>
+          <lightning:button
+            variant="brand"
+            label="Get Random Country"
+            title="Get Random Country"
+            onclick="{! c.handleRandomCountryClick }"
+          />
+          <p class="slds-p-top_medium">{!v.randomCountry}</p>
+        </div>
+      </div>
+      <div
+        class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-p-horizontal_x-small"
+      >
+        <div class="slds-theme_default slds-box">
+          <div class="slds-text-title_caps slds-p-bottom_medium">
+            Object.entries()
+          </div>
+
+          <lightning:button
+            variant="brand"
+            label="Get Titles"
+            title="Get Titles"
+            onclick="{! c.handleTitleClick }"
+          />
+          <ul class="unorderedList slds-p-top_medium">
+            <aura:iteration items="{!v.titles}" var="title">
+              <li>{!title}</li>
+            </aura:iteration>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-p-horizontal_x-small"
+      >
+        <div class="slds-theme_default slds-box">
+          <div class="slds-text-title_caps slds-p-bottom_medium">
+            Async / Await
+          </div>
+          <lightning:select
+            name="titles"
+            label="Pick a national anthem"
+            required="true"
+            aura:id="titlePicklist"
+            class="slds-p-bottom_small"
+          >
+            <option value="">choose one...</option>
+
+            <aura:iteration items="{!v.countries}" var="country">
+              <option value="{!country}">{!country}</option>
+            </aura:iteration>
+          </lightning:select>
+
+          <lightning:button
+            variant="brand"
+            label="Get Anthem"
+            title="Get Anthem"
+            onclick="{! c.handleAnthemClick }"
+          />
+          <aura:if isTrue="{!v.loading}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+          </aura:if>
+          <p class="slds-p-top_medium">
+            <aura:unescapedHtml value="{!v.anthem}"></aura:unescapedHtml>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,39 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+>
+  <ltng:require
+    afterScriptsLoaded="{!c.afterScriptsLoaded}"
+    scripts="{!$Resource.JSZip}"
+  />
+
+  <div>
+    <lightning:spinner
+      aura:id="bulkUploaderSpinner"
+      variant="brand"
+      class="slds-hide"
+    />
+
+    <div class="slds-m-around_medium">
+      <div
+        class="slds-form-element slds-m-top_xx-large slds-m-right_xx-large slds-m-bottom_medium slds-text-align_left"
+      >
+        <div aura:id="chooser" class="slds-form-element__control">
+          <div class="slds-m-bottom_medium slds-text-heading_small">
+            Choose Zip Files
+          </div>
+          <input
+            type="file"
+            label="Choose Files"
+            aura:id="files"
+            id="files"
+            onchange="{!c.validateFiles}"
+            multiple="true"
+            accept="application/pdf, application/zip"
+            class="files"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>
